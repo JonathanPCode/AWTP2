@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+	
+	<style>
+	
+	.wrap {
+		border: 5px solid black;
+		/* width: 400px; */
+		height: 720px;
+		display: grid;
+		background: black;
+		
+		grid-template-rows: 1fr 200px;
+		grid-template-columns: 48px 150px 1fr 150px;
+		grid-template-areas: "nav hier build inspect"
+							 "nav hier asset inspect";
+		
+		grid-gap: 4px; /* also includes grid-row-gap, grid-column-gap */
+		text-align: center;
+		transition: 0.3s;
+	}
+	img {
+		transition: 0.3s;
+		width: 18px;
+		height: 18px;
+	}
+	
+	img:hover {
+		transform: scale(1.5);
+	}
+	
+	.d1 img {
+		display: block;
+		width: 100%;
+		height: auto;
+		opacity: 1;
+	}
+	
+	.d1 {
+		background: red;
+		grid-area: nav;
+	}
+	
+	.d2 {
+		background: antiquewhite;
+		grid-area: hier;
+	}
+	
+	.d3 {
+		background: lightblue;
+		grid-area: build;
+	}
+	
+	.d4 {
+		background: yellow;
+		grid-area: inspect;
+	}
+	
+	.d5 {
+		background: lightgreen;
+		grid-area: asset;
+	}
+	
+	</style>
+	<script>
+		// Stores the width of hierarchy and inspector columns
+		const colSize = ["150px", "150px"];
+		
+		// Collapses and uncollapses hierarchy
+		function collapseHier() {
+			var grid = document.getElementById("mygrid");
+			// Store asset div
+			var div = document.getElementById("hier");
+			// If not shrunk, shrink and realign text
+			if (colSize[0] != "48px") {
+				colSize[0] = "48px";
+				div.style.writingMode = "vertical-lr";
+				div.style.textAlign = "left";
+			}
+			// If shrunk, unshrink and realign text
+			else {
+				colSize[0] = "150px";
+				div.style.writingMode = "horizontal-tb";
+				div.style.textAlign = "center";
+			}
+			grid.style.gridTemplateColumns = ("48px " + colSize[0] + " 1fr " + colSize[1]);
+		}
+		
+		// Collapses and uncollapses inspector
+		function collapseInspect() {
+			var grid = document.getElementById("mygrid");
+			// Store asset div
+			var div = document.getElementById("inspect");
+			// If not shrunk, shrink and realign text
+			if (colSize[1] != "48px") {
+				colSize[1] = "48px";
+				div.style.writingMode = "vertical-lr";
+				div.style.textAlign = "left";
+			}
+			// If shrunk, unshrink and realign text
+			else {
+				colSize[1] = "150px";
+				div.style.writingMode = "horizontal-tb";
+				div.style.textAlign = "center";
+			}
+			grid.style.gridTemplateColumns = ("48px " + colSize[0] + " 1fr " + colSize[1]);
+		}
+		
+		// Collapses and uncollapses assets
+		function collapseAsset() {
+			var grid = document.getElementById("mygrid");
+			// Store asset div
+			var div = document.getElementById("asset");
+			// If not shrunk, shrink
+			if (grid.style.gridTemplateRows != "1fr 48px") {
+				grid.style.gridTemplateRows = "1fr 48px";
+			}
+			// If shrunk, unshrink
+			else {
+				grid.style.gridTemplateRows = "1fr 200px";
+			}
+		}
+
+	</script>
+</head>
+
+<body>
+	<!-- <h2>Jonathan Phaneuf: p1 with MQs for three sizes (-750 750+ 1000+) </h2> -->
+	<div class=wrap id="mygrid">
+		<div class=d1>
+			<img src="menu_btn1.png">
+			<img src="menu_btn2.png">
+			<img src="menu_btn3.png">
+			<img src="menu_btn4.png">
+		</div>
+		
+		<div class=d2 id="hier">
+			<img src="collapse_btn.png" onclick="collapseHier()"> HIERARCHY
+		</div>
+		
+		<div class=d3>
+			BUILD
+		</div>
+		
+		<div class=d4 id="inspect">
+			<img src="collapse_btn.png" onclick="collapseInspect()"> INSPECTOR
+		</div>
+		
+		<div class=d5 id="asset">
+			<img src="collapse_btn.png" onclick="collapseAsset()"> ASSETS
+		</div>
+	</div>
+
+</body>
+</html>
